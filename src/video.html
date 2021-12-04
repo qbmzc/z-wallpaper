@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="./static/css/video-style.css">
+  </head>
+  <body>
+    <h1>💖 Hello World!</h1>
+    <p>Welcome to your Electron application.</p>
+    <video id="homeVideo" class="home-video" autoplay loop muted>
+      <source src="./static/c.mp4" type="video/mp4">
+    </video>
+  </body>
+  <script>
+    $('.home-video').height(window.innerHeight);
+    $(window).resize(function () {
+      $('.home-video').attr('height',window.innerHeight)
+      $('.home-video').attr('width',window.innerWidth)
+    })
+
+    document.getElementById('homeVideo').play();
+  </script>
+</html>
