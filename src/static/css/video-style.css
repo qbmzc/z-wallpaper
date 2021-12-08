@@ -11,7 +11,7 @@
     -ms-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    background: url(./static/bg.png) no-repeat;
+    background: url('../image/bg.png') no-repeat;
     background-size: cover;
   }
   

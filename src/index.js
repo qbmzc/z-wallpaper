@@ -1,4 +1,4 @@
-const { app,screen, BrowserWindow } = require('electron');
+const { app, screen, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -13,14 +13,17 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: width,
     height: height,
-    frame: false, 
+    frame: false,
+    roundedCorners: false,
     // autoHideMenuBar:true,
-    type: 'desktop',
+     
+     //type: 'desktop',
   });
-
+ // mainWindow.setIgnoreMouseEvents(true)
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'video.html'));
-  //mainWindow.loadURL('https://snowyan.gitee.io/nier/')
+  //mainWindow.loadFile(path.join(__dirname, '../project/nier/index.html'));
+   mainWindow.loadURL('https://snowyan.gitee.io/nier/')
+  //mainWindow.loadURL('https://snowyan.gitee.io/time-wallpaper/')
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
 };
@@ -28,11 +31,29 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+// let win
+let tray = null
+app.whenReady().then(() => {
+  tray = new Tray(path.join(__dirname,'/static/image/a.png'))
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label:"关于",role:"about",
+    },
+    {
+      label: '退出',click:()=>{
+        app.exit()
+      }
+    }
+  ])
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+  tray.setContextMenu(contextMenu)
+  // tray.setToolTip('This is my application')
+  // tray.setTitle('zwallpaper')
+  app.on('activate', function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+})
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();

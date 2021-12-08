@@ -19,12 +19,17 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "name":"z-wallpaper",
+        "icon": "src/static/image/Icon.icns"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
-            "darwin", "linux","windows"
+            "darwin",
+            "linux",
+            "windows"
           ],
           "config": {
             "name": "my_app"
