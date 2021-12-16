@@ -11,8 +11,8 @@ const createWindow = () => {
   const { width, height } = primaryDisplay.workAreaSize
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    // width: width,
-    // height: height,
+    width: width,
+    height: height,
     frame: false,
     roundedCorners: false,
     // autoHideMenuBar:true,
