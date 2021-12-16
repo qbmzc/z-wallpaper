@@ -1,28 +1,28 @@
 const { app, screen, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
-
+const isMac = process.platform === 'darwin'
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
-
+let mainWindow
 const createWindow = () => {
   const primaryDisplay = screen.getPrimaryDisplay()
   const { width, height } = primaryDisplay.workAreaSize
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: width,
-    height: height,
+  mainWindow = new BrowserWindow({
+    // width: width,
+    // height: height,
     frame: false,
     roundedCorners: false,
     // autoHideMenuBar:true,
-     
-     //type: 'desktop',
+
+    type: 'desktop',
   });
- // mainWindow.setIgnoreMouseEvents(true)
+  // mainWindow.setIgnoreMouseEvents(true)
   // and load the index.html of the app.
   //mainWindow.loadFile(path.join(__dirname, '../project/nier/index.html'));
-   mainWindow.loadURL('https://snowyan.gitee.io/nier/')
+  mainWindow.loadURL('https://snowyan.gitee.io/nier/')
   //mainWindow.loadURL('https://snowyan.gitee.io/time-wallpaper/')
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
@@ -34,13 +34,28 @@ const createWindow = () => {
 // let win
 let tray = null
 app.whenReady().then(() => {
-  tray = new Tray(path.join(__dirname,'/static/image/a.png'))
+  tray = new Tray(path.join(__dirname, '/static/image/a.png'))
   const contextMenu = Menu.buildFromTemplate([
     {
-      label:"关于",role:"about",
+      label: "关于", role: "about",
     },
     {
-      label: '退出',click:()=>{
+      label:"壁纸切换",submenu:[{
+        label:'nier',
+        checked:true
+      },{
+        type:'separator'
+      },{
+        label:'wlop',
+        click:()=>{
+          mainWindow.loadURL('https://snowyan.gitee.io/time-wallpaper/')
+        }
+      },{
+        label:'视频'
+      }]
+    },
+    {
+      label: '退出', click: () => {
         app.exit()
       }
     }
@@ -55,7 +70,7 @@ app.whenReady().then(() => {
 })
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     app.quit();
   }
 });
