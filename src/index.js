@@ -19,7 +19,6 @@ const createWindow = () => {
 
     type: 'desktop',
   });
-  // mainWindow.setIgnoreMouseEvents(true)
   // and load the index.html of the app.
   //mainWindow.loadFile(path.join(__dirname, '../project/nier/index.html'));
   mainWindow.loadURL('https://snowyan.gitee.io/nier/')
@@ -28,10 +27,32 @@ const createWindow = () => {
   //mainWindow.webContents.openDevTools();
 };
 
+let win
+const newWindow = () => {
+  const displays = screen.getAllDisplays()
+  displays.forEach(d => {
+
+  })
+  const externalDisplay = displays.find((display) => {
+    return display.bounds.x !== 0 || display.bounds.y !== 0
+  })
+  if (externalDisplay) {
+    const { width, height } = externalDisplay.workAreaSize
+    win = new BrowserWindow({
+      x: externalDisplay.bounds.x,
+      y: externalDisplay.bounds.y,
+      width: width,
+      height: height,
+      frame: false,
+      roundedCorners: false,
+      type: 'desktop'
+    })
+    win.loadURL('https://snowyan.gitee.io/time-wallpaper/')
+  };
+}
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-// let win
 let tray = null
 app.whenReady().then(() => {
   tray = new Tray(path.join(__dirname, '/static/image/a.png'))
@@ -40,18 +61,18 @@ app.whenReady().then(() => {
       label: "关于", role: "about",
     },
     {
-      label:"壁纸切换",submenu:[{
-        label:'nier',
-        checked:true
-      },{
-        type:'separator'
-      },{
-        label:'wlop',
-        click:()=>{
+      label: "壁纸切换", submenu: [{
+        label: 'nier',
+        checked: true
+      }, {
+        type: 'separator'
+      }, {
+        label: 'wlop',
+        click: () => {
           mainWindow.loadURL('https://snowyan.gitee.io/time-wallpaper/')
         }
-      },{
-        label:'视频'
+      }, {
+        label: '视频'
       }]
     },
     {
@@ -65,7 +86,7 @@ app.whenReady().then(() => {
   // tray.setToolTip('This is my application')
   // tray.setTitle('zwallpaper')
   app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) { createWindow(); newWindow() }
   })
 })
 
@@ -80,6 +101,7 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
+    newWindow();
   }
 });
 
