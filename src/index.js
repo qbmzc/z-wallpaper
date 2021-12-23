@@ -40,7 +40,7 @@ const newWindow = () => {
     const { width, height } = externalDisplay.workAreaSize
     win = new BrowserWindow({
       x: externalDisplay.bounds.x,
-      y: externalDisplay.bounds.y,
+      y: externalDisplay.bounds.y+10,
       width: width,
       height: height,
       frame: false,
@@ -62,8 +62,10 @@ app.whenReady().then(() => {
     },
     {
       label: "壁纸切换", submenu: [{
-        label: 'nier',
-        checked: true
+        label: 'snow',
+        click:()=>{
+          mainWindow.loadURL('http://snow.congco.com/')
+        }
       }, {
         type: 'separator'
       }, {
