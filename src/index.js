@@ -47,7 +47,7 @@ const newWindow = () => {
       roundedCorners: false,
       type: 'desktop'
     })
-    win.loadURL('https://snowyan.gitee.io/time-wallpaper/')
+    win.loadURL('https://snowyan.gitee.io/nier/')
   };
 }
 // This method will be called when Electron has finished
