@@ -9,6 +9,11 @@
 ## 快速开始
 
 ```bash
+## 单独安装 electron
+# 设置环境变量ELECTRON_MIRROR为国内镜像
+ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
+npm install electron --save-dev
+
 # 安装依赖
 yarn install
 
@@ -34,6 +39,7 @@ yarn make
           "config": {}
         }
 ```
+
 
 ## TODO
 

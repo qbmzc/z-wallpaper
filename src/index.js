@@ -74,7 +74,10 @@ app.whenReady().then(() => {
           mainWindow.loadURL('https://snowyan.gitee.io/time-wallpaper/')
         }
       }, {
-        label: '视频'
+        label: '视频',
+        click:()=>{
+          mainWindow.loadFile(path.join(__dirname, 'video.html'));
+        }
       }]
     },
     {
